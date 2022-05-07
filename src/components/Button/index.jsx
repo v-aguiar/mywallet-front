@@ -1,7 +1,10 @@
 ﻿import styled from "styled-components";
+import ReactLoading from "react-loading";
 
-export function Button({ text }) {
-  return <ButtonComponent type="submit" value={text} />;
+export function Button({ text, loading }) {
+  return loading 
+    ? <ReactLoading type="spinningBubbles" color="white" height={"1.25rem"} width={"1.25rem"}/>
+    : <ButtonComponent type="submit" value={text}/>;
 }
 
 const ButtonComponent = styled.input`

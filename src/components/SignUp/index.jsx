@@ -5,9 +5,9 @@ import axios from "axios";
 
 import { Button } from "../Button";
 import { Input } from "../Input";
-import { SignIn } from "../SignIn";
 
 export function SignUp() {
+  const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -38,28 +38,42 @@ export function SignUp() {
       break;
 
       default : 
-        console.log("Deu ruim!!! -> Unexpected input!")
+        console.log("Unexpected input!")
       break;
     }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // [...e.target][0].value; // name
-    // [...e.target][1].value; // email
-    // [...e.target][2].value; // password
-    // [...e.target][3].value; // confirm
-
-    // post de um novo user
     registerUser();
   };
 
-  const registerUser = () => {
+  const registerUser = async () => {
+    // api url: https://project-mywallet-api.herokuapp.com/
+    const API_URL = "https://project-mywallet-api.herokuapp.com/sign-up";
     const { name, email, password, confirm } = userData;
 
-    // TODO register a new user using axios POST on route '/sign-up'
-    // api url: https://project-mywallet-api.herokuapp.com/
+    const body = {
+      name,
+      email
+    };
+    const config = {
+      headers: {
+        Password: password,
+        Confirm: confirm
+      }
+    };
 
+    setLoading(!loading);
+    const promise = axios.post(API_URL, body, config);
+    promise.then((response) => {
+      setLoading(false);
+      console.log(response)
+    })
+    promise.catch (error =>  {
+      console.error("⚠ Couldn't create user!", error)
+      setLoading(false);
+    })
   }
 
   return (
@@ -99,10 +113,10 @@ export function SignUp() {
           name="confirmInput"
           id="confirmInput"
         />
-        <Button text="Cadastrar" />
+        <Button text="Cadastrar" loading={loading} />
       </form>
 
-      <Link to={<SignIn />}>Já tem uma conta? Entre agora!</Link>
+      <Link to="/sign-in" >Já tem uma conta? Entre agora!</Link>
     </SignUpComponent>
   );
 }
@@ -138,7 +152,7 @@ const SignUpComponent = styled.section`
     color: #fff;
 
     text-decoration: none;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.4s ease-in-out;
 
     &:hover {
       -webkit-text-stroke-color: #fff;

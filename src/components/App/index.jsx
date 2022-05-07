@@ -1,4 +1,5 @@
-﻿import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+﻿import { useState } from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 import UserContext from "../../contexts/UserContext"
 
@@ -8,8 +9,10 @@ import {SignUp} from "../SignUp"
 import GlobalStyles from "../../assets/styles/globalStyles"
 
 export function App() {
+  const [token, setToken] = useState("")
+
   return(
-    <UserContext.Provider>
+    <UserContext.Provider value={{token, setToken}}>
       <Router>
         <GlobalStyles/>
         <Routes>
