@@ -49,8 +49,8 @@ export function SignUp() {
   };
 
   const registerUser = async () => {
-    // api url: https://project-mywallet-api.herokuapp.com/
     const API_URL = "https://project-mywallet-api.herokuapp.com/sign-up";
+    // const API_URL = "http://localhost:5000/sign-up";
     const { name, email, password, confirm } = userData;
 
     const body = {
@@ -60,7 +60,7 @@ export function SignUp() {
     const config = {
       headers: {
         Password: password,
-        Confirm: confirm
+        Confirm: confirm,
       }
     };
 

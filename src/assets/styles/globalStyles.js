@@ -25,6 +25,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    height: 100vh;
+
     font-family: 'Raleway', sans-serif;
     font-weight: 400;
     font-size: 1rem;

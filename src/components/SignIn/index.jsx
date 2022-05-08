@@ -1,5 +1,5 @@
 ﻿import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import axios from "axios";
@@ -16,6 +16,7 @@ export function SignIn() {
   });
 
   const { setToken } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     switch (e.target.id) {
@@ -42,6 +43,7 @@ export function SignIn() {
 
   const enterApp = async () => {
     const API_URL = "https://project-mywallet-api.herokuapp.com/sign-in";
+    // const API_URL = "http://localhost:5000/sign-in";
     const { email, password } = userData;
 
     const body = {
@@ -49,7 +51,7 @@ export function SignIn() {
     };
     const config = {
       headers: {
-        Password: password,
+        "Password": password,
       },
     };
 
@@ -58,6 +60,7 @@ export function SignIn() {
       .then((response) => {
         setLoading(false);
         setToken(response.data.token);
+        navigate("/transactions")
         })
       .catch((error) => {
         console.error("⚠ Couldn't create user!", error);

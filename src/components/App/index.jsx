@@ -5,6 +5,7 @@ import UserContext from "../../contexts/UserContext"
 
 import { SignIn } from "../SignIn"
 import {SignUp} from "../SignUp"
+import {Transactions} from "../Transactions"
 
 import GlobalStyles from "../../assets/styles/globalStyles"
 
@@ -18,6 +19,7 @@ export function App() {
         <Routes>
         <Route path="/sign-in" element={<SignIn/>}/>
         <Route path="/sign-up" element={<SignUp/>}/>
+        <Route path="/transactions" element={<Transactions />} />
         </Routes>
       </Router>
     </UserContext.Provider>
