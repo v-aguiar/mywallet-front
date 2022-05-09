@@ -1,5 +1,5 @@
 ﻿import { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import styled from "styled-components";
@@ -15,33 +15,44 @@ export function Transactions() {
   const [transactions, setTransactions] = useState([]);
   const [balance, setBalance] = useState(0);
 
-  const { token } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getTransactions();
-  }, []); //eslint-disable-line
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (token.length === 0) {
+      const localToken = localStorage.getItem("token");
+
+      if (localToken !== null && localToken.length > 0) {
+        setToken(localToken);
+        getTransactions({ localToken });
+      }
+    } else {
+      getTransactions({ localToken: token });
+    }
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     getBalance();
   }, [transactions]); //eslint-disable-line
 
-  const getTransactions = async () => {
+  const getTransactions = async ({ localToken = undefined }) => {
     const API_URL = "https://project-mywallet-api.herokuapp.com/transactions";
+
+    let validToken = localToken ? localToken : token;
 
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${validToken}`,
       },
     };
 
     setLoading(!loading);
     try {
-      const { data } = await axios.get(API_URL, config);
+      const { data = [] } = await axios.get(API_URL, config);
 
       data.name ? setName(data.name) : setName(data[0].name);
-
-      // TODO -> When there are transactions, store and render'em through a state
-      console.log("TRansaction data: ", data);
 
       setTransactions(data);
 
@@ -55,22 +66,32 @@ export function Transactions() {
   const getBalance = () => {
     let balanceSum = 0;
 
-    transactions.forEach(({ amount, type }) => {
-      balanceSum += type === "income" ? amount * 1 : amount * -1;
-    });
+    if (!transactions.name) {
+      transactions.forEach(({ amount, type }) => {
+        balanceSum += type === "income" ? amount * 1 : amount * -1;
+      });
+    }
 
     setBalance(balanceSum);
   };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken("");
+    navigate("/");
+  };
+
+  console.log("transactions ", transactions);
 
   return (
     <TransactionsComponent balance={balance} transactions={transactions}>
       <header>
         <h1>Olá, {name}</h1>
-        <SignOut size={24} color={"white"} />
+        <SignOut onClick={logout} size={24} color={"white"} />
       </header>
 
       <div className="transactionsDisplay">
-        {transactions.length === 0 ? (
+        {transactions.name ? (
           <p className="placeholder">
             Não há registros de
             <br />
@@ -93,10 +114,14 @@ export function Transactions() {
                 }
               )}
             </ul>
-            <span className="balanceLine">
-              <p>Saldo</p>
-              <p className="balance">RS {balance},00</p>
-            </span>
+            {transactions.name ? (
+              <></>
+            ) : (
+              <span className="balanceLine">
+                <p>Saldo</p>
+                <p className="balance">RS {balance},00</p>
+              </span>
+            )}
           </>
         )}
       </div>
@@ -127,6 +152,12 @@ const TransactionsComponent = styled.section`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    transition: all 0.2s;
+    svg:hover {
+      cursor: pointer;
+      filter: brightness(1.5);
+    }
   }
 
   .balanceLine {

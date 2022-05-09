@@ -1,4 +1,4 @@
-﻿import { useState, useContext } from "react";
+﻿import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
@@ -15,8 +15,25 @@ export function SignIn() {
     password: "",
   });
 
-  const { setToken } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    console.log("token: ", token);
+
+    if (token.length > 0) {
+      navigate("/transactions");
+    }
+
+    const localToken = localStorage.getItem("token");
+
+    if (localToken !== null && localToken.length > 0) {
+      setToken(localToken);
+      navigate("/transactions");
+    }
+  }, []); // eslint-disable-line
 
   const handleChange = (e) => {
     switch (e.target.id) {
@@ -43,7 +60,6 @@ export function SignIn() {
 
   const enterApp = async () => {
     const API_URL = "https://project-mywallet-api.herokuapp.com/sign-in";
-    // const API_URL = "http://localhost:5000/sign-in";
     const { email, password } = userData;
 
     const body = {
@@ -51,17 +67,21 @@ export function SignIn() {
     };
     const config = {
       headers: {
-        "Password": password,
+        Password: password,
       },
     };
 
     setLoading(!loading);
-    axios.post(API_URL, body, config)
+    axios
+      .post(API_URL, body, config)
       .then((response) => {
         setLoading(false);
         setToken(response.data.token);
-        navigate("/transactions")
-        })
+
+        localStorage.setItem("token", response.data.token);
+
+        navigate("/transactions");
+      })
       .catch((error) => {
         console.error("⚠ Couldn't create user!", error);
         setLoading(false);
@@ -115,7 +135,7 @@ const SignInComponent = styled.section`
 
     h1 {
       font-family: "Saira Stencil One", cursive;
-      font-weight: 700;
+      font-weight: 400;
       font-size: 2rem;
 
       color: #fff;

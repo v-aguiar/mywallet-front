@@ -6,14 +6,14 @@ const GlobalStyle = createGlobalStyle`
     
     /* TODO  
     *  Font family: Raleway
+    *  font-family: 'Raleway', sans-serif;
     *  weights: 700, 400
     *
     *  Font family - LOGO: Saira Stencil One
+    *  font-family: 'Saira Stencil One', cursive;
     *  Weight: 400
     *  Size: 32px
     *
-    *  font-family: 'Raleway', sans-serif;
-    *  font-family: 'Saira Stencil One', cursive;
     */
     
     // CSS Color Variables

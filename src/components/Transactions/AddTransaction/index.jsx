@@ -1,4 +1,4 @@
-﻿import { useState, useContext } from "react";
+﻿import { useState, useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
@@ -19,7 +19,19 @@ export function AddTransaction() {
   const location = useLocation();
   const isIncome = location.pathname.includes("income");
 
-  const { token } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const localToken = localStorage.getItem("token");
+
+    if (token === "" && localToken !== null && localToken.length > 0) {
+      setToken(localToken);
+      window.location.reload();
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const handleChange = (e) => {
     switch (e.target.id) {
