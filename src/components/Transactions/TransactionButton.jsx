@@ -1,17 +1,13 @@
 ﻿import styled from "styled-components";
-import ReactLoading from "react-loading";
 import { PlusCircle, MinusCircle } from "phosphor-react";
+
+import { LoadingButton } from "../LoadingButton";
 
 export function TransactionButton({ text, loading }) {
   const [firstWord, secondWord] = text.split(" ");
 
   return loading ? (
-    <ReactLoading
-      type="spinningBubbles"
-      color="white"
-      height={"1.25rem"}
-      width={"1.25rem"}
-    />
+    <LoadingButton />
   ) : (
     <TransactionButtonComponent type="submit">
       {text === "Nova entrada" ? (

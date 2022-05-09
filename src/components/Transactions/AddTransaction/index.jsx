@@ -7,6 +7,7 @@ import axios from "axios";
 import { Input } from "../../Input";
 import { Button } from "../../Button";
 import UserContext from "../../../contexts/UserContext";
+import { CurrencyInput } from "../../Input/CurrencyInput";
 
 export function AddTransaction() {
   const [loading, setLoading] = useState(false);
@@ -95,7 +96,7 @@ export function AddTransaction() {
       </header>
 
       <form onSubmit={handleSubmit}>
-        <Input
+        <CurrencyInput
           handleChange={handleChange}
           value={transactionData.amount}
           placeholder="Valor"

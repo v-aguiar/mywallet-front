@@ -1,12 +1,16 @@
 ﻿import styled from "styled-components";
+import ReactLoading from "react-loading";
 
-import { LoadingButton } from "../LoadingButton";
-
-export function Button({ text, loading }) {
-  return loading ? (
-    <LoadingButton />
-  ) : (
-    <ButtonComponent type="submit">{text}</ButtonComponent>
+export function LoadingButton() {
+  return (
+    <ButtonComponent type="submit">
+      <ReactLoading
+        type="spinningBubbles"
+        color="white"
+        height={"1.25rem"}
+        width={"1.25rem"}
+      />
+    </ButtonComponent>
   );
 }
 
@@ -29,11 +33,4 @@ const ButtonComponent = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  transition: all 0.5s ease-in-out;
-
-  &:hover {
-    filter: brightness(1.2);
-    cursor: pointer;
-  }
 `;

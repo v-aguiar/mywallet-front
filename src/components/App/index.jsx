@@ -10,9 +10,6 @@ import { AddTransaction } from "../Transactions/AddTransaction";
 
 import GlobalStyles from "../../assets/styles/globalStyles";
 
-// TODO use local storage to keep user session on page reload.
-// TODO remove token from context and local storage, then redirect user to Sign-in page Logou button is clicked
-
 export function App() {
   const [token, setToken] = useState("");
 

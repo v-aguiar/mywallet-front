@@ -1,17 +1,32 @@
-﻿import styled from "styled-components"
+﻿import styled from "styled-components";
 
-export function Input({ id, name, value, type = "text", placeholder = "", handleChange }) {
+export function Input({
+  id,
+  name,
+  value,
+  type = "text",
+  placeholder = "",
+  handleChange,
+}) {
   return (
-    <InputComponent type={type}value={value} onChange={handleChange} id={id} name={name} placeholder={placeholder} />
-  )
+    <InputComponent
+      type={type}
+      value={value}
+      onChange={handleChange}
+      id={id}
+      name={name}
+      placeholder={placeholder}
+      required
+    />
+  );
 }
 
 const InputComponent = styled.input`
   height: 3.625rem;
   width: 100%;
 
-  padding: 1.1rem .95rem;
-  margin-bottom: .82rem;
+  padding: 1.1rem 0.95rem;
+  margin-bottom: 0.82rem;
 
   border: none;
   outline: none;
@@ -20,4 +35,4 @@ const InputComponent = styled.input`
   font-size: 1.25rem;
   line-height: 1.476em;
   color: #000;
-`
+`;

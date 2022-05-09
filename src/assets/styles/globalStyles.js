@@ -4,7 +4,7 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
     
-    /* TODO  
+    /* 
     *  Font family: Raleway
     *  font-family: 'Raleway', sans-serif;
     *  weights: 700, 400
