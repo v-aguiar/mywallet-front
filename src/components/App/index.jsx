@@ -21,6 +21,7 @@ export function App() {
       <Router>
         <GlobalStyles />
         <Routes>
+          <Route path="/" element={<SignIn />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/transactions" element={<Transactions />} />
