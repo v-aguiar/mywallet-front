@@ -6,7 +6,7 @@ export function Button({ text, loading }) {
     ? <ReactLoading type="spinningBubbles" color="white" height={"1.25rem"} width={"1.25rem"}/>
     : <ButtonComponent type="submit" >{text}</ButtonComponent>;
 }
-
+// TODO -> BUILD A PROPER LOADING BUTTON FFS
 const ButtonComponent = styled.button`
   background-color: var(--btn-purple);
 

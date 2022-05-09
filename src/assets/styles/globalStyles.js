@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
     --transaction-green: #03AC00;
     --transaction-red: #C70000;
     --text-grey: #868686;
+    --light-grey: #C6C6C6;
   }
 
   body {
